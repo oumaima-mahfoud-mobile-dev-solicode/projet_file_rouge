@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ARTFIT — Mode Techwear & Vêtements 3D</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <style>
+    .store-container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 30px 20px;
+      width: 100%;
+    }
+    .hero-banner {
+      background: linear-gradient(135deg, #111827 0%, #1E1B4B 100%);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 40px 30px;
+      margin-bottom: 32px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+    .hero-text h2 {
+      font-size: 2.2rem;
+      color: #fff;
+      margin-bottom: 8px;
+    }
+    .hero-text p {
+      color: var(--text-secondary);
+      font-size: 1.05rem;
+      max-width: 520px;
+    }
+    .category-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 24px;
+    }
+    .cat-pill {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      color: var(--text-secondary);
+      padding: 8px 18px;
+      border-radius: 9999px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .cat-pill:hover, .cat-pill.active {
+      background: var(--primary);
+      color: #fff;
+      border-color: var(--primary);
+    }
+    .cart-btn-nav {
+      position: relative;
+      background: #182234;
+      border: 1px solid var(--border);
+      color: #fff;
+      padding: 8px 16px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+    }
+    .cart-badge-count {
+      background: var(--accent-cyan);
+      color: #000;
+      font-weight: 800;
+      font-size: 0.72rem;
+      padding: 2px 6px;
+      border-radius: 9999px;
+    }
+    .selector-group {
+      margin-bottom: 16px;
+    }
+    .selector-label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      margin-bottom: 6px;
+      display: block;
+    }
+    .options-row {
+      display: flex;
+      gap: 8px;
+    }
+    .option-btn {
+      padding: 6px 14px;
+      border: 1px solid var(--border);
+      background: #0F172A;
+      color: #fff;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .option-btn.selected {
+      border-color: var(--accent-cyan);
+      background: rgba(6, 182, 212, 0.15);
+      color: var(--accent-cyan);
+    }
+    /* Panier Drawer */
+    .cart-drawer {
+      position: fixed;
+      top: 0;
+      right: -420px;
+      width: 400px;
+      max-width: 90vw;
+      height: 100vh;
+      background: var(--bg-surface);
+      border-left: 1px solid var(--border);
+      z-index: 1500;
+      transition: right 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      box-shadow: -10px 0 30px rgba(0,0,0,0.7);
+    }
+    .cart-drawer.open {
+      right: 0;
+    }
+    .cart-header {
+      padding: 18px 20px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .cart-body {
+      padding: 20px;
+      flex: 1;
+      overflow-y: auto;
+    }
+    .cart-item {
+      background: #0F172A;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px;
+      margin-bottom: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .cart-footer {
+      padding: 20px;
+      border-top: 1px solid var(--border);
+      background: #070B14;
+    }
+    .countdown-box {
+      background: rgba(245, 158, 11, 0.12);
+      border: 1px solid var(--warning);
+      border-radius: 6px;
+      padding: 8px 12px;
+      font-size: 0.8rem;
+      color: var(--warning);
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation Haute -->
+  <header class="navbar">
+    <div class="nav-brand">
+      <div style="width: 32px; height: 32px; background: var(--primary); border-radius: 6px; display: flex; align-items: center; justify-content: center; font-weight: 900; color: #fff;">A</div>
+      <h1>ARTFIT <span style="font-size: 0.75rem; color: var(--accent-cyan); font-weight: 500; margin-left: 6px;">BOUTIQUE TECHWEAR</span></h1>
+    </div>
+
+    <div style="display: flex; align-items: center; gap: 16px;">
+      <a href="/admin.html" class="btn btn-secondary" style="font-size: 0.8rem; padding: 6px 12px;">
+        ⚙️ Espace Admin
+      </a>
+      <button id="openCartBtn" class="cart-btn-nav">
+        <span>Mon Panier</span>
+        <span id="cartCountBadge" class="cart-badge-count">0</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Contenu Principal -->
+  <main class="store-container">
+
+    <!-- Bannière d'accueil -->
+    <section class="hero-banner">
+      <div class="hero-text">
+        <h2>Nouvelle Collection Techwear</h2>
+        <p>Vêtements modernes avec essayage interactif 3D. Prix affichés uniquement en Dirhams Marocains (MAD).</p>
+      </div>
+      <div>
+        <div style="background: rgba(6, 182, 212, 0.1); border: 1px dashed var(--accent-cyan); border-radius: 10px; padding: 14px 20px; text-align: center;">
+          <div style="font-size: 0.75rem; color: var(--accent-cyan); font-weight: 700; text-transform: uppercase;">Garantie Réservation</div>
+          <div style="font-size: 0.95rem; color: #fff; font-weight: 600; margin-top: 4px;">60 Minutes de Stock Garanti</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Filtres par catégorie et Recherche -->
+    <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 16px; margin-bottom: 20px;">
+      <!-- Pilules de catégories -->
+      <div class="category-pills" id="categoryPills">
+        <button class="cat-pill active" data-category="">Tous les vêtements</button>
+        <!-- Chargé dynamiquement -->
+      </div>
+
+      <!-- Recherche simple -->
+      <div style="min-width: 260px;">
+        <input type="text" id="storeSearchInput" class="form-control" placeholder="Rechercher un vêtement...">
+      </div>
+    </div>
+
+    <!-- Grille des Vêtements Publiés -->
+    <section class="product-grid" id="publicProductGrid">
+      <!-- Chargé dynamiquement -->
+      <div style="grid-column: 1 / -1; text-align: center; padding: 40px; color: var(--text-secondary);">
+        Chargement des vêtements en ligne...
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ========================================================================= -->
+  <!-- MODAL : DÉTAIL PRODUIT ET ESSAYAGE 3D                                      -->
+  <!-- ========================================================================= -->
+  <div id="productDetailModal" class="modal-overlay">
+    <div class="modal-box" style="max-width: 760px;">
+      <div class="modal-header">
+        <h3 id="modalDetailTitle">Détail du Vêtement</h3>
+        <button type="button" class="btn btn-secondary close-store-modal" style="padding: 4px 10px;">✕</button>
+      </div>
+      <div class="modal-body">
+        <!-- Visualiseur 3D interactif -->
+        <div class="viewer-3d">
+          <div class="wireframe-cube" id="cube3D"></div>
+          <div style="position: absolute; bottom: 12px; left: 16px; font-size: 0.75rem; color: var(--accent-cyan); font-weight: 600; background: rgba(0,0,0,0.6); padding: 4px 8px; border-radius: 4px;">
+            ✦ Vue 3D Temps Réel (Simulation GLB)
+          </div>
+        </div>
+
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px;">
+          <div>
+            <span id="modalDetailCat" style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; font-weight: 600;"></span>
+            <h2 id="modalDetailName" style="color: #fff; font-size: 1.4rem; margin-top: 2px;"></h2>
+          </div>
+          <div style="text-align: right;">
+            <div id="modalDetailPrice" style="font-size: 1.6rem; font-weight: 700; color: #fff; font-family: 'Space Grotesk';"></div>
+            <span style="font-size: 0.8rem; color: var(--accent-cyan); font-weight: 700;">MAD (TTC)</span>
+          </div>
+        </div>
+
+        <p id="modalDetailDesc" style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 20px; line-height: 1.6;"></p>
+
+        <!-- Sélecteur de Taille -->
+        <div class="selector-group">
+          <label class="selector-label">Choisir une taille :</label>
+          <div class="options-row" id="sizeSelector">
+            <button type="button" class="option-btn selected">M</button>
+            <button type="button" class="option-btn">S</button>
+            <button type="button" class="option-btn">L</button>
+            <button type="button" class="option-btn">XL</button>
+          </div>
+        </div>
+
+        <!-- Sélecteur de Couleur -->
+        <div class="selector-group">
+          <label class="selector-label">Choisir une couleur :</label>
+          <div class="options-row" id="colorSelector">
+            <button type="button" class="option-btn selected">Noir Mat</button>
+            <button type="button" class="option-btn">Gris Cyber</button>
+            <button type="button" class="option-btn">Indigo Tech</button>
+          </div>
+        </div>
+
+        <!-- Stock restant -->
+        <div style="margin-top: 14px; font-size: 0.85rem; color: var(--success); font-weight: 600;" id="modalDetailStock">
+          En stock physique disponible
+        </div>
+      </div>
+
+      <div class="modal-footer" style="justify-content: space-between; align-items: center;">
+        <span style="font-size: 0.78rem; color: var(--text-secondary);">Garantie 60 min au panier</span>
+        <button id="addToCartBtn" class="btn btn-cyan" style="padding: 10px 22px;">
+          🛒 Ajouter au Panier (Réservation 60 min)
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- DRAWER DU PANIER ET RÉSERVATION TEMPORAIRE                                -->
+  <!-- ========================================================================= -->
+  <div id="cartDrawer" class="cart-drawer">
+    <div class="cart-header">
+      <h3 style="color: #fff;">Votre Panier</h3>
+      <button id="closeCartBtn" class="btn btn-secondary" style="padding: 4px 10px;">✕</button>
+    </div>
+    <div class="cart-body">
+      <!-- Compte à rebours de réservation (60 min) -->
+      <div class="countdown-box" id="reservationCountdownBox" style="display: none;">
+        <span>⏳ Réservation active :</span>
+        <strong id="countdownTimer" style="font-family: 'Space Grotesk'; font-size: 0.95rem;">60:00</strong>
+      </div>
+
+      <div id="cartItemsList">
+        <p style="color: var(--text-secondary); text-align: center; margin-top: 40px;">Votre panier est vide pour le moment.</p>
+      </div>
+    </div>
+    <div class="cart-footer">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+        <span style="color: var(--text-secondary); font-size: 0.9rem;">Sous-total (MAD) :</span>
+        <strong id="cartSubtotal" style="font-size: 1.35rem; color: #fff; font-family: 'Space Grotesk';">0.00 MAD</strong>
+      </div>
+      <button class="btn btn-primary" style="width: 100%; padding: 12px; font-size: 1rem;">
+        Valider la commande (Paiement)
+      </button>
+    </div>
+  </div>
+
+  <script src="/js/store.js"></script>
+</body>
+</html>
+

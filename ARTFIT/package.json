@@ -1,0 +1,21 @@
+{
+  "name": "artfit-product-management",
+  "version": "1.0.0",
+  "description": "ARTFIT — Plateforme de vente de vêtements avec expérience 3D. Sprint 01 : Product Management CRUD avec Architecture 3-Tiers.",
+  "main": "src/app.js",
+  "scripts": {
+    "start": "node src/app.js",
+    "test": "node --test tests/**/*.test.js"
+  },
+  "keywords": [
+    "artfit",
+    "ecommerce",
+    "fashion",
+    "3d",
+    "crud",
+    "3-tiers"
+  ],
+  "author": "ARTFIT Senior Full-Stack Developer",
+  "license": "ISC"
+}
+

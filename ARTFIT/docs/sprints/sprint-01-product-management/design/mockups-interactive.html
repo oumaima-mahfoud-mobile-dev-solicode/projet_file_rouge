@@ -1,0 +1,966 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ARTFIT — Maquettes Officielles : Page Admin & Boutique Publique</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #6366F1;
+      --primary-hover: #4F46E5;
+      --accent-cyan: #06B6D4;
+      --bg-main: #0B0F19;
+      --bg-surface: #111827;
+      --bg-card: #182234;
+      --bg-hover: #1F2937;
+      --border: #374151;
+      --text-primary: #F9FAFB;
+      --text-secondary: #9CA3AF;
+      --text-muted: #6B7280;
+      --success: #10B981;
+      --warning: #F59E0B;
+      --danger: #EF4444;
+      --radius: 8px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: var(--bg-main);
+      color: var(--text-primary);
+      font-family: 'Inter', sans-serif;
+      line-height: 1.5;
+    }
+    h1, h2, h3, h4 { font-family: 'Space Grotesk', sans-serif; }
+
+    /* Top Mode Bar */
+    .top-control {
+      background: #030712;
+      border-bottom: 2px solid var(--primary);
+      padding: 12px 24px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    .brand-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .brand-title h1 {
+      font-size: 1.3rem;
+      letter-spacing: 0.08em;
+      color: #fff;
+    }
+    .main-tabs {
+      display: flex;
+      gap: 8px;
+      background: var(--bg-surface);
+      padding: 4px;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+    }
+    .main-tab-btn {
+      padding: 8px 18px;
+      border-radius: 6px;
+      border: none;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s;
+      color: var(--text-secondary);
+      background: transparent;
+    }
+    .main-tab-btn.active {
+      background: var(--primary);
+      color: #fff;
+      box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
+    }
+    .main-tab-btn.public-tab.active {
+      background: var(--accent-cyan);
+      color: #000;
+      box-shadow: 0 4px 12px rgba(6, 182, 212, 0.4);
+    }
+
+    .device-switcher {
+      display: flex;
+      gap: 6px;
+      background: var(--bg-surface);
+      padding: 4px;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+    }
+    .device-btn {
+      background: transparent;
+      border: none;
+      color: var(--text-secondary);
+      padding: 6px 12px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .device-btn.active {
+      background: #374151;
+      color: #fff;
+    }
+
+    /* Container */
+    .viewport {
+      display: flex;
+      justify-content: center;
+      padding: 24px 16px;
+      min-height: calc(100vh - 80px);
+    }
+    .frame {
+      width: 100%;
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: max-width 0.3s ease;
+    }
+    .frame.desktop { max-width: 1240px; }
+    .frame.mobile {
+      max-width: 410px;
+      border: 10px solid #1f2937;
+      border-radius: 36px;
+      margin: 10px auto;
+      box-shadow: 0 25px 50px rgba(0,0,0,0.8);
+    }
+
+    /* Common Components */
+    .btn {
+      padding: 8px 16px;
+      border-radius: var(--radius);
+      font-size: 0.875rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+    .btn-primary { background: var(--primary); color: #fff; }
+    .btn-primary:hover { background: var(--primary-hover); }
+    .btn-secondary { background: transparent; border: 1px solid var(--border); color: var(--text-primary); }
+    .btn-secondary:hover { background: var(--bg-hover); }
+    .btn-danger { background: var(--danger); color: #fff; }
+    .btn-danger:hover { background: #dc2626; }
+    .btn-cyan { background: var(--accent-cyan); color: #000; font-weight: 700; }
+    .btn-cyan:hover { background: #0891b2; }
+
+    .badge {
+      display: inline-block;
+      padding: 3px 8px;
+      border-radius: 9999px;
+      font-size: 0.72rem;
+      font-weight: 600;
+    }
+    .badge-success { background: rgba(16, 185, 129, 0.2); color: var(--success); border: 1px solid var(--success); }
+    .badge-warning { background: rgba(245, 158, 11, 0.2); color: var(--warning); border: 1px solid var(--warning); }
+    .badge-danger { background: rgba(239, 68, 68, 0.2); color: var(--danger); border: 1px solid var(--danger); }
+    .badge-draft { background: rgba(107, 114, 128, 0.2); color: var(--text-secondary); border: 1px solid var(--border); }
+    .badge-3d { background: rgba(6, 182, 212, 0.2); color: var(--accent-cyan); border: 1px solid var(--accent-cyan); }
+
+    .form-control {
+      width: 100%;
+      background: #0f172a;
+      border: 1px solid var(--border);
+      color: var(--text-primary);
+      padding: 10px 12px;
+      border-radius: var(--radius);
+      font-size: 0.9rem;
+      outline: none;
+    }
+    .form-control:focus { border-color: var(--primary); box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2); }
+
+    /* =========================================================================
+       SECTION 1 : STYLES PAGE ADMIN
+       ========================================================================= */
+    .admin-bar {
+      background: #0f172a;
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+    .admin-kpis {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 14px;
+      padding: 20px;
+      background: #0b0f19;
+      border-bottom: 1px solid var(--border);
+    }
+    .kpi-box {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      padding: 14px;
+      border-radius: var(--radius);
+    }
+    .kpi-title { font-size: 0.75rem; color: var(--text-secondary); text-transform: uppercase; font-weight: 600; }
+    .kpi-number { font-size: 1.5rem; font-weight: 700; color: #fff; font-family: 'Space Grotesk'; }
+
+    .admin-content { padding: 20px; background: #0b0f19; flex: 1; }
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 16px;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .table-wrap {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow-x: auto;
+    }
+    table { width: 100%; border-collapse: collapse; text-align: left; font-size: 0.875rem; }
+    th { background: #1e293b; padding: 12px 14px; color: var(--text-secondary); font-size: 0.75rem; text-transform: uppercase; }
+    td { padding: 12px 14px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+    tr:hover td { background: var(--bg-hover); }
+
+    /* =========================================================================
+       SECTION 2 : STYLES PAGE PUBLIQUE (BOUTIQUE CLIENT)
+       ========================================================================= */
+    .public-nav {
+      background: #0a0e1a;
+      border-bottom: 1px solid var(--border);
+      padding: 14px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .public-logo { font-size: 1.4rem; font-weight: 700; letter-spacing: 0.1em; color: #fff; }
+    .public-menu { display: flex; gap: 20px; font-size: 0.9rem; font-weight: 500; }
+    .public-menu a { color: var(--text-secondary); text-decoration: none; transition: color 0.2s; cursor: pointer; }
+    .public-menu a:hover, .public-menu a.active { color: var(--accent-cyan); }
+    .public-cart { background: rgba(99,102,241,0.15); border: 1px solid var(--primary); padding: 6px 14px; border-radius: 9999px; font-size: 0.85rem; color: #fff; cursor: pointer; }
+
+    .hero-banner {
+      background: linear-gradient(135deg, #1e1b4b 0%, #030712 70%);
+      padding: 40px 24px;
+      text-align: center;
+      border-bottom: 1px solid var(--border);
+    }
+    .hero-banner h2 { font-size: 2rem; color: #fff; margin-bottom: 8px; }
+    .hero-banner p { color: var(--text-secondary); max-width: 600px; margin: 0 auto; font-size: 0.95rem; }
+
+    .catalog-section { padding: 28px 24px; background: #0b0f19; flex: 1; }
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 20px;
+    }
+    .product-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+      cursor: pointer;
+    }
+    .product-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--accent-cyan);
+      box-shadow: 0 10px 25px rgba(6, 182, 212, 0.15);
+    }
+    .card-img-wrap {
+      height: 220px;
+      background: #182234;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      font-size: 3.5rem;
+    }
+    .card-badge-3d {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(4px);
+      color: var(--accent-cyan);
+      border: 1px solid var(--accent-cyan);
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 9999px;
+    }
+    .card-body {
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+    .card-cat { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; font-weight: 600; margin-bottom: 4px; }
+    .card-title { font-size: 1.05rem; font-weight: 700; color: #fff; margin-bottom: 8px; }
+    .card-price { font-size: 1.2rem; font-weight: 700; color: #fff; font-family: 'Space Grotesk'; }
+    .card-price span { color: var(--accent-cyan); font-size: 0.85rem; font-weight: 600; margin-left: 4px; }
+    .card-swatches { display: flex; gap: 6px; margin: 10px 0; align-items: center; }
+    .swatch { width: 16px; height: 16px; border-radius: 50%; border: 1px solid #fff; }
+
+    /* =========================================================================
+       MODALS
+       ========================================================================= */
+    .modal-overlay {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(5px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 2000;
+      padding: 16px;
+    }
+    .modal-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      width: 100%;
+      max-width: 640px;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: 0 25px 60px rgba(0,0,0,0.8);
+    }
+    .modal-header {
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .modal-body { padding: 20px; }
+    .modal-footer {
+      padding: 14px 20px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      background: #0f172a;
+    }
+
+    /* 3D Wireframe Simulation */
+    .viewer-3d-box {
+      height: 240px;
+      background: radial-gradient(circle, #1e1b4b 0%, #030712 100%);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      margin-bottom: 16px;
+      overflow: hidden;
+    }
+    .cube-sim {
+      width: 80px; height: 80px;
+      border: 2px dashed var(--accent-cyan);
+      box-shadow: 0 0 25px rgba(6,182,212,0.5);
+      border-radius: 8px;
+      animation: spinCube 6s linear infinite;
+    }
+    @keyframes spinCube {
+      0% { transform: rotateX(0deg) rotateY(0deg); }
+      100% { transform: rotateX(360deg) rotateY(360deg); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Controller Bar -->
+  <header class="top-control">
+    <div class="brand-title">
+      <h1>ARTFIT</h1>
+      <span class="badge badge-success">SPRINT 01 — DEUX PAGES CLÉS</span>
+    </div>
+
+    <!-- Main View Switcher (Admin vs Public Store) -->
+    <div class="main-tabs">
+      <button class="main-tab-btn active" id="tab-admin" onclick="switchView('admin')">
+        ⚙️ PAGE ADMIN (Gestion Complète)
+      </button>
+      <button class="main-tab-btn public-tab" id="tab-public" onclick="switchView('public')">
+        🛍️ BOUTIQUE PUBLIQUE (Vue Client)
+      </button>
+    </div>
+
+    <!-- Responsive Device Switcher -->
+    <div class="device-switcher">
+      <button class="device-btn active" id="dev-desktop" onclick="setDevice('desktop')">💻 Ordinateur</button>
+      <button class="device-btn" id="dev-mobile" onclick="setDevice('mobile')">📱 Mobile</button>
+    </div>
+  </header>
+
+  <!-- Viewport Area -->
+  <div class="viewport">
+    <div class="frame desktop" id="app-frame">
+
+      <!-- =====================================================================
+           VUE 1 : PAGE ADMIN (TOUTE LA GESTION EN UNE SEULE PAGE)
+           ===================================================================== -->
+      <section id="view-admin" style="display:flex; flex-direction:column; flex:1;">
+        
+        <!-- En-tête Admin -->
+        <div class="admin-bar">
+          <div>
+            <h2 style="font-size:1.25rem; color:#fff;">Gestion des Produits & Stock</h2>
+            <p style="font-size:0.8rem; color:var(--text-secondary);">Ajoutez, modifiez, supprimez et gérez vos vêtements en toute simplicité.</p>
+          </div>
+          <button class="btn btn-primary" onclick="openProductModal('create')">
+            + Ajouter un Nouveau Produit
+          </button>
+        </div>
+
+        <!-- 4 Cartes Résumé Direct -->
+        <div class="admin-kpis">
+          <div class="kpi-box">
+            <div class="kpi-title">Articles au Catalogue</div>
+            <div class="kpi-number">3 Produits</div>
+          </div>
+          <div class="kpi-box">
+            <div class="kpi-title">Articles en Vente Publique</div>
+            <div class="kpi-number" style="color:var(--success);">2 Publiés</div>
+          </div>
+          <div class="kpi-box">
+            <div class="kpi-title">Articles Stock Bas (&lt; 5)</div>
+            <div class="kpi-number" style="color:var(--warning);">1 Alerte</div>
+          </div>
+          <div class="kpi-box">
+            <div class="kpi-title">Devise Officielle</div>
+            <div class="kpi-number" style="color:var(--accent-cyan);">MAD (Dirham)</div>
+          </div>
+        </div>
+
+        <!-- Corps de la Page Admin -->
+        <div class="admin-content">
+
+          <!-- Barre de Recherche et Filtres -->
+          <div class="toolbar">
+            <div style="display:flex; gap:10px; flex:1; max-width:550px;">
+              <input type="text" id="search-input" class="form-control" placeholder="🔍 Rechercher un produit par nom, SKU ou catégorie..." oninput="filterAdminProducts()">
+              <select class="form-control" style="width:160px;" id="filter-cat" onchange="filterAdminProducts()">
+                <option value="ALL">Toutes Catégories</option>
+                <option value="Vestes">Vestes</option>
+                <option value="Pantalons">Pantalons</option>
+                <option value="Hauts">Hauts</option>
+              </select>
+            </div>
+            <div style="font-size:0.85rem; color:var(--text-secondary);">
+              Total affiché : <b id="prod-count" style="color:#fff;">3</b> vêtements
+            </div>
+          </div>
+
+          <!-- Tableau Tout-en-Un de Gestion des Produits -->
+          <div class="table-wrap">
+            <table id="admin-table">
+              <thead>
+                <tr>
+                  <th>Vêtement</th>
+                  <th>Catégorie</th>
+                  <th>Variantes (Tailles & Couleurs)</th>
+                  <th>Prix (MAD)</th>
+                  <th>Stock Dépôt</th>
+                  <th>Dispo Vente</th>
+                  <th>Statut</th>
+                  <th style="text-align:right;">Actions Directes</th>
+                </tr>
+              </thead>
+              <tbody id="admin-tbody">
+                <!-- Ligne 1 -->
+                <tr id="row-1" data-cat="Vestes" data-name="Bomber Cyberpunk Noir">
+                  <td>
+                    <div style="display:flex; align-items:center; gap:10px;">
+                      <div style="font-size:1.8rem; background:#1e293b; padding:4px 8px; border-radius:6px;">🧥</div>
+                      <div>
+                        <b style="color:#fff;">Bomber Cyberpunk Noir</b>
+                        <div style="font-size:0.75rem; color:var(--text-muted);">SKU : AF-JKT-CYB-01 | 3D: .GLB Actif</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td>Vestes &gt; Blousons</td>
+                  <td>
+                    <span class="badge" style="background:#1e293b; color:#fff;">S, M, L, XL</span>
+                    <span style="display:inline-block; width:12px; height:12px; background:#111; border-radius:50%; border:1px solid #fff; vertical-align:middle; margin-left:4px;" title="Noir"></span>
+                  </td>
+                  <td><b>1 250,00 MAD</b></td>
+                  <td>45 pièces</td>
+                  <td><span class="badge badge-success">40 pièces</span> <span style="font-size:0.7rem; color:var(--warning);">(5 rés.)</span></td>
+                  <td><span class="badge badge-success">PUBLIÉ (Visible)</span></td>
+                  <td style="text-align:right;">
+                    <button class="btn btn-secondary" style="padding:4px 10px; font-size:0.75rem;" onclick="openProductModal('edit', 1)">✏️ Modifier</button>
+                    <button class="btn btn-danger" style="padding:4px 8px; font-size:0.75rem;" onclick="deleteProduct(1)">🗑️ Supprimer</button>
+                  </td>
+                </tr>
+
+                <!-- Ligne 2 -->
+                <tr id="row-2" data-cat="Pantalons" data-name="Pantalon Cargo Tech">
+                  <td>
+                    <div style="display:flex; align-items:center; gap:10px;">
+                      <div style="font-size:1.8rem; background:#1e293b; padding:4px 8px; border-radius:6px;">👖</div>
+                      <div>
+                        <b style="color:#fff;">Pantalon Cargo Tech</b>
+                        <div style="font-size:0.75rem; color:var(--text-muted);">SKU : AF-PNT-CRG-02 | 3D: .GLB Actif</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td>Pantalons &gt; Cargo</td>
+                  <td>
+                    <span class="badge" style="background:#1e293b; color:#fff;">M, L</span>
+                    <span style="display:inline-block; width:12px; height:12px; background:#1f2937; border-radius:50%; border:1px solid #fff; vertical-align:middle; margin-left:4px;" title="Gris"></span>
+                  </td>
+                  <td><b>850,00 MAD</b></td>
+                  <td>15 pièces</td>
+                  <td><span class="badge badge-success">15 pièces</span></td>
+                  <td><span class="badge badge-success">PUBLIÉ (Visible)</span></td>
+                  <td style="text-align:right;">
+                    <button class="btn btn-secondary" style="padding:4px 10px; font-size:0.75rem;" onclick="openProductModal('edit', 2)">✏️ Modifier</button>
+                    <button class="btn btn-danger" style="padding:4px 8px; font-size:0.75rem;" onclick="deleteProduct(2)">🗑️ Supprimer</button>
+                  </td>
+                </tr>
+
+                <!-- Ligne 3 -->
+                <tr id="row-3" data-cat="Hauts" data-name="T-Shirt Oversize Blanc">
+                  <td>
+                    <div style="display:flex; align-items:center; gap:10px;">
+                      <div style="font-size:1.8rem; background:#1e293b; padding:4px 8px; border-radius:6px;">👕</div>
+                      <div>
+                        <b style="color:#fff;">T-Shirt Oversize Blanc</b>
+                        <div style="font-size:0.75rem; color:var(--text-muted);">SKU : AF-TSH-OVR-03 | 2D Uniquement</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td>Hauts &gt; T-Shirts</td>
+                  <td>
+                    <span class="badge" style="background:#1e293b; color:#fff;">S, M, L</span>
+                    <span style="display:inline-block; width:12px; height:12px; background:#fff; border-radius:50%; border:1px solid #aaa; vertical-align:middle; margin-left:4px;" title="Blanc"></span>
+                  </td>
+                  <td><b>390,00 MAD</b></td>
+                  <td>2 pièces</td>
+                  <td><span class="badge badge-warning">2 pièces (Stock Bas)</span></td>
+                  <td><span class="badge badge-draft">BROUILLON (Masqué)</span></td>
+                  <td style="text-align:right;">
+                    <button class="btn btn-secondary" style="padding:4px 10px; font-size:0.75rem;" onclick="openProductModal('edit', 3)">✏️ Modifier</button>
+                    <button class="btn btn-danger" style="padding:4px 8px; font-size:0.75rem;" onclick="deleteProduct(3)">🗑️ Supprimer</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div style="margin-top:14px; font-size:0.8rem; color:var(--text-muted); display:flex; justify-content:space-between; align-items:center;">
+            <span>💡 <b>Note :</b> Seuls les produits avec le statut <b>PUBLIÉ</b> apparaissent sur la boutique publique des clients.</span>
+            <button class="btn btn-secondary" style="font-size:0.8rem; padding:4px 12px;" onclick="switchView('public')">
+              👉 Voir le Rendu Côté Client
+            </button>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- =====================================================================
+           VUE 2 : PAGE PUBLIQUE / CLIENT (LES PRODUITS MIS EN LIGNE)
+           ===================================================================== -->
+      <section id="view-public" style="display:none; flex-direction:column; flex:1;">
+        
+        <!-- Navigation Client Publique -->
+        <nav class="public-nav">
+          <div class="public-logo">ARTFIT</div>
+          <div class="public-menu">
+            <a class="active" onclick="filterPublic('ALL')">Tous les Vêtements</a>
+            <a onclick="filterPublic('Vestes')">Vestes</a>
+            <a onclick="filterPublic('Pantalons')">Pantalons</a>
+            <a onclick="filterPublic('Hauts')">Hauts</a>
+          </div>
+          <div class="public-cart" onclick="alert('Panier ARTFIT (Sprint 01 : Tarification en MAD)')">
+            🛒 Panier (0 MAD)
+          </div>
+        </nav>
+
+        <!-- Bannière Publique -->
+        <div class="hero-banner">
+          <h2>COLLECTION ARTFIT 3D</h2>
+          <p>Découvrez nos vêtements modernes haute couture avec essayage et visualisation 3D en direct.</p>
+          <div style="margin-top:12px;">
+            <span class="badge badge-3d">✨ Expérience 3D Interactive</span>
+            <span class="badge badge-success" style="margin-left:6px;">🇲🇦 Tous les prix en Dirhams (MAD)</span>
+          </div>
+        </div>
+
+        <!-- Catalogue des Produits Publiés (Mis en Ligne) -->
+        <div class="catalog-section">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+            <h3 style="font-size:1.15rem; color:#fff;">Nos Vêtements Disponibles</h3>
+            <span style="font-size:0.85rem; color:var(--text-secondary);">2 modèles en ligne actuellement</span>
+          </div>
+
+          <div class="product-grid" id="public-grid">
+            
+            <!-- Carte Produit 1 (Publié) -->
+            <div class="product-card" data-cat="Vestes" onclick="openPublicDetail('bomber')">
+              <div class="card-img-wrap">
+                <span class="card-badge-3d">Vue 3D 360°</span>
+                🧥
+              </div>
+              <div class="card-body">
+                <div class="card-cat">Vestes &gt; Blousons</div>
+                <div class="card-title">Bomber Cyberpunk Noir</div>
+                <div class="card-swatches">
+                  <span style="font-size:0.75rem; color:var(--text-muted);">Couleur :</span>
+                  <div class="swatch" style="background:#111;"></div>
+                  <span style="font-size:0.75rem; color:var(--text-muted); margin-left:8px;">Tailles : S, M, L, XL</span>
+                </div>
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-top:auto; padding-top:12px; border-top:1px solid var(--border);">
+                  <div class="card-price">1 250,00 <span>MAD</span></div>
+                  <button class="btn btn-cyan" style="padding:6px 12px; font-size:0.75rem;">Voir en 3D &gt;</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Carte Produit 2 (Publié) -->
+            <div class="product-card" data-cat="Pantalons" onclick="openPublicDetail('cargo')">
+              <div class="card-img-wrap">
+                <span class="card-badge-3d">Vue 3D 360°</span>
+                👖
+              </div>
+              <div class="card-body">
+                <div class="card-cat">Pantalons &gt; Cargo</div>
+                <div class="card-title">Pantalon Cargo Tech</div>
+                <div class="card-swatches">
+                  <span style="font-size:0.75rem; color:var(--text-muted);">Couleur :</span>
+                  <div class="swatch" style="background:#1f2937;"></div>
+                  <span style="font-size:0.75rem; color:var(--text-muted); margin-left:8px;">Tailles : M, L</span>
+                </div>
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-top:auto; padding-top:12px; border-top:1px solid var(--border);">
+                  <div class="card-price">850,00 <span>MAD</span></div>
+                  <button class="btn btn-cyan" style="padding:6px 12px; font-size:0.75rem;">Voir en 3D &gt;</button>
+                </div>
+              </div>
+            </div>
+
+          </div>
+          
+          <div style="margin-top:24px; padding:16px; background:#111827; border-radius:var(--radius); border:1px solid var(--border); font-size:0.85rem; color:var(--text-secondary); text-align:center;">
+            🔒 <i>Note : Le "T-Shirt Oversize Blanc" est actuellement en <b>Brouillon</b> dans l'admin, donc il n'apparaît pas ici pour le client.</i>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       MODAL 1 : FORMULAIRE ADMIN (AJOUTER / MODIFIER UN PRODUIT)
+       ========================================================================= -->
+  <div class="modal-overlay" id="modal-product">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 id="modal-title" style="color:#fff; font-size:1.15rem;">Ajouter un Nouveau Vêtement</h3>
+        <button onclick="closeProductModal()" style="background:transparent; border:none; color:var(--text-secondary); font-size:1.4rem; cursor:pointer;">&times;</button>
+      </div>
+      <div class="modal-body">
+        
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:14px; margin-bottom:14px;">
+          <div>
+            <label style="display:block; font-size:0.8rem; font-weight:600; color:var(--text-secondary); margin-bottom:4px;">Nom du Vêtement *</label>
+            <input type="text" id="form-name" class="form-control" placeholder="ex : Bomber Cuir Tech">
+          </div>
+          <div>
+            <label style="display:block; font-size:0.8rem; font-weight:600; color:var(--text-secondary); margin-bottom:4px;">Code SKU * (Unique)</label>
+            <input type="text" id="form-sku" class="form-control" placeholder="ex : AF-JKT-04">
+          </div>
+        </div>
+
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:14px; margin-bottom:14px;">
+          <div>
+            <label style="display:block; font-size:0.8rem; font-weight:600; color:var(--text-secondary); margin-bottom:4px;">Prix de Vente (MAD) *</label>
+            <input type="number" id="form-price" class="form-control" placeholder="1200.00" step="0.01">
+          </div>
+          <div>
+            <label style="display:block; font-size:0.8rem; font-weight:600; color:var(--text-secondary); margin-bottom:4px;">Catégorie *</label>
+            <select id="form-cat" class="form-control">
+              <option value="Vestes">Vestes &gt; Blousons</option>
+              <option value="Pantalons">Pantalons &gt; Cargo</option>
+              <option value="Hauts">Hauts &gt; T-Shirts</option>
+            </select>
+          </div>
+        </div>
+
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:14px; margin-bottom:14px;">
+          <div>
+            <label style="display:block; font-size:0.8rem; font-weight:600; color:var(--text-secondary); margin-bottom:4px;">Quantité en Stock</label>
+            <input type="number" id="form-stock" class="form-control" placeholder="25">
+          </div>
+          <div>
+            <label style="display:block; font-size:0.8rem; font-weight:600; color:var(--text-secondary); margin-bottom:4px;">Statut de Publication</label>
+            <select id="form-status" class="form-control">
+              <option value="PUBLIÉ">PUBLIÉ (En ligne sur la boutique)</option>
+              <option value="BROUILLON">BROUILLON (Masqué pour les clients)</option>
+            </select>
+          </div>
+        </div>
+
+        <div style="margin-bottom:14px;">
+          <label style="display:block; font-size:0.8rem; font-weight:600; color:var(--text-secondary); margin-bottom:4px;">Tailles disponibles</label>
+          <div style="display:flex; gap:10px;">
+            <label><input type="checkbox" checked> S</label>
+            <label><input type="checkbox" checked> M</label>
+            <label><input type="checkbox" checked> L</label>
+            <label><input type="checkbox"> XL</label>
+          </div>
+        </div>
+
+        <div style="margin-bottom:14px;">
+          <label style="display:block; font-size:0.8rem; font-weight:600; color:var(--text-secondary); margin-bottom:4px;">Modèle 3D (.glb) et Photos</label>
+          <div style="border:1px dashed var(--border); padding:14px; text-align:center; border-radius:6px; background:#0f172a; font-size:0.85rem;">
+            📁 Glisser-déposer le fichier <b>.glb</b> et la photo principale ici
+          </div>
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" onclick="closeProductModal()">Annuler</button>
+        <button class="btn btn-primary" onclick="saveProduct()">Enregistrer dans le Catalogue</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       MODAL 2 : APERÇU FICHE CLIENT 3D
+       ========================================================================= -->
+  <div class="modal-overlay" id="modal-detail">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 id="det-title" style="color:#fff; font-size:1.15rem;">Bomber Cyberpunk Noir — Vue 3D</h3>
+        <button onclick="closeDetailModal()" style="background:transparent; border:none; color:var(--text-secondary); font-size:1.4rem; cursor:pointer;">&times;</button>
+      </div>
+      <div class="modal-body">
+        
+        <div class="viewer-3d-box">
+          <div class="cube-sim"></div>
+          <div style="position:absolute; bottom:8px; left:12px; font-size:0.75rem; color:var(--accent-cyan);">
+            ✨ Modèle 3D interactif (Rotation au doigt ou à la souris 360°)
+          </div>
+        </div>
+
+        <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:12px;">
+          <div>
+            <h4 style="font-size:1.2rem; color:#fff;" id="det-name">Bomber Cyberpunk Noir</h4>
+            <div style="font-size:0.8rem; color:var(--text-muted);">Marque : ARTFIT | Tissu imperméable respirant</div>
+          </div>
+          <div style="font-size:1.4rem; font-weight:700; color:#fff;" id="det-price">1 250,00 <span style="font-size:0.9rem; color:var(--accent-cyan);">MAD</span></div>
+        </div>
+
+        <div style="margin-bottom:14px;">
+          <div style="font-size:0.8rem; font-weight:600; color:var(--text-secondary); margin-bottom:6px;">Choisir la Taille :</div>
+          <div style="display:flex; gap:8px;">
+            <button class="btn btn-secondary" style="padding:6px 12px;">S</button>
+            <button class="btn btn-primary" style="padding:6px 12px;">M</button>
+            <button class="btn btn-secondary" style="padding:6px 12px;">L</button>
+            <button class="btn btn-secondary" style="padding:6px 12px;">XL</button>
+          </div>
+        </div>
+
+        <div style="font-size:0.85rem; color:var(--success); margin-bottom:16px;">
+          ✓ En stock disponible immédiatement (Livraison partout au Maroc)
+        </div>
+
+        <button class="btn btn-cyan" style="width:100%; padding:12px; font-size:1rem;" onclick="alert('Article ajouté au panier !')">
+          🛍️ Ajouter au Panier (Prix : <span id="det-btn-price">1 250,00 MAD</span>)
+        </button>
+
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let currentEditRow = null;
+
+    // Basculer entre Page Admin et Page Boutique Publique
+    function switchView(view) {
+      const adminView = document.getElementById('view-admin');
+      const publicView = document.getElementById('view-public');
+      const tabAdmin = document.getElementById('tab-admin');
+      const tabPublic = document.getElementById('tab-public');
+
+      if (view === 'admin') {
+        adminView.style.display = 'flex';
+        publicView.style.display = 'none';
+        tabAdmin.classList.add('active');
+        tabPublic.classList.remove('active');
+      } else {
+        adminView.style.display = 'none';
+        publicView.style.display = 'flex';
+        tabPublic.classList.add('active');
+        tabAdmin.classList.remove('active');
+      }
+    }
+
+    // Basculer entre Mode Ordinateur et Mobile
+    function setDevice(device) {
+      const frame = document.getElementById('app-frame');
+      const devDesk = document.getElementById('dev-desktop');
+      const devMob = document.getElementById('dev-mobile');
+
+      if (device === 'mobile') {
+        frame.classList.remove('desktop');
+        frame.classList.add('mobile');
+        devMob.classList.add('active');
+        devDesk.classList.remove('active');
+      } else {
+        frame.classList.remove('mobile');
+        frame.classList.add('desktop');
+        devDesk.classList.add('active');
+        devMob.classList.remove('active');
+      }
+    }
+
+    // Modal Produit (Ajouter / Modifier)
+    function openProductModal(action, rowId = null) {
+      const modal = document.getElementById('modal-product');
+      const title = document.getElementById('modal-title');
+      currentEditRow = rowId;
+
+      if (action === 'edit' && rowId) {
+        title.innerText = "Modifier le Vêtement";
+        const row = document.getElementById(`row-${rowId}`);
+        document.getElementById('form-name').value = row.getAttribute('data-name');
+        document.getElementById('form-cat').value = row.getAttribute('data-cat');
+        document.getElementById('form-price').value = rowId === 1 ? '1250.00' : (rowId === 2 ? '850.00' : '390.00');
+        document.getElementById('form-sku').value = rowId === 1 ? 'AF-JKT-CYB-01' : (rowId === 2 ? 'AF-PNT-CRG-02' : 'AF-TSH-OVR-03');
+      } else {
+        title.innerText = "Ajouter un Nouveau Vêtement";
+        document.getElementById('form-name').value = "";
+        document.getElementById('form-sku').value = "";
+        document.getElementById('form-price').value = "";
+        document.getElementById('form-stock').value = "";
+      }
+
+      modal.style.display = 'flex';
+    }
+
+    function closeProductModal() {
+      document.getElementById('modal-product').style.display = 'none';
+    }
+
+    function saveProduct() {
+      const name = document.getElementById('form-name').value;
+      const price = document.getElementById('form-price').value;
+      const cat = document.getElementById('form-cat').value;
+      const status = document.getElementById('form-status').value;
+
+      if (!name || !price) {
+        alert("Veuillez saisir au moins le nom et le prix en MAD.");
+        return;
+      }
+
+      if (currentEditRow) {
+        // Modification
+        const row = document.getElementById(`row-${currentEditRow}`);
+        row.setAttribute('data-name', name);
+        row.setAttribute('data-cat', cat);
+        row.children[0].querySelector('b').innerText = name;
+        row.children[1].innerText = cat;
+        row.children[3].innerHTML = `<b>${parseFloat(price).toFixed(2).replace('.', ',')} MAD</b>`;
+        row.children[6].innerHTML = status === 'PUBLIÉ' ? 
+          '<span class="badge badge-success">PUBLIÉ (Visible)</span>' : 
+          '<span class="badge badge-draft">BROUILLON (Masqué)</span>';
+        alert(`Le vêtement "${name}" a été mis à jour avec succès en ${price} MAD !`);
+      } else {
+        // Ajout nouveau
+        alert(`Nouveau vêtement "${name}" ajouté avec succès au catalogue ARTFIT en ${price} MAD !`);
+      }
+
+      closeProductModal();
+    }
+
+    function deleteProduct(rowId) {
+      if (confirm("Voulez-vous vraiment supprimer ce vêtement du catalogue ?")) {
+        const row = document.getElementById(`row-${rowId}`);
+        if (row) {
+          row.style.display = 'none';
+          alert("Produit supprimé avec succès !");
+        }
+      }
+    }
+
+    // Filtrer dans la page Admin
+    function filterAdminProducts() {
+      const search = document.getElementById('search-input').value.toLowerCase();
+      const cat = document.getElementById('filter-cat').value;
+      const rows = document.querySelectorAll('#admin-tbody tr');
+      let count = 0;
+
+      rows.forEach(r => {
+        const name = (r.getAttribute('data-name') || '').toLowerCase();
+        const rCat = r.getAttribute('data-cat') || '';
+        const matchSearch = name.includes(search);
+        const matchCat = cat === 'ALL' || rCat === cat;
+
+        if (matchSearch && matchCat) {
+          r.style.display = '';
+          count++;
+        } else {
+          r.style.display = 'none';
+        }
+      });
+      document.getElementById('prod-count').innerText = count;
+    }
+
+    // Modal Détail Public
+    function openPublicDetail(type) {
+      const modal = document.getElementById('modal-detail');
+      if (type === 'bomber') {
+        document.getElementById('det-title').innerText = "Bomber Cyberpunk Noir — Expérience 3D";
+        document.getElementById('det-name').innerText = "Bomber Cyberpunk Noir";
+        document.getElementById('det-price').innerHTML = '1 250,00 <span style="font-size:0.9rem; color:var(--accent-cyan);">MAD</span>';
+        document.getElementById('det-btn-price').innerText = '1 250,00 MAD';
+      } else {
+        document.getElementById('det-title').innerText = "Pantalon Cargo Tech — Expérience 3D";
+        document.getElementById('det-name').innerText = "Pantalon Cargo Tech";
+        document.getElementById('det-price').innerHTML = '850,00 <span style="font-size:0.9rem; color:var(--accent-cyan);">MAD</span>';
+        document.getElementById('det-btn-price').innerText = '850,00 MAD';
+      }
+      modal.style.display = 'flex';
+    }
+
+    function closeDetailModal() {
+      document.getElementById('modal-detail').style.display = 'none';
+    }
+
+    function filterPublic(category) {
+      const cards = document.querySelectorAll('#public-grid .product-card');
+      cards.forEach(c => {
+        if (category === 'ALL' || c.getAttribute('data-cat') === category) {
+          c.style.display = 'flex';
+        } else {
+          c.style.display = 'none';
+        }
+      });
+    }
+  </script>
+</body>
+</html>

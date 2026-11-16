@@ -1,0 +1,10 @@
+{
+  "name": "artfit-root",
+  "version": "1.0.0",
+  "description": "Plateforme ARTFIT Fashion Techwear 3D",
+  "scripts": {
+    "start": "node ARTFIT/src/app.js",
+    "test": "node --test ARTFIT/tests/**/*.test.js"
+  }
+}
+
