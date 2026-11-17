@@ -9,31 +9,35 @@ title: Rapport du projet fil rouge
 
 ## Table des matières
 
-- [Remerciements](#remerciements)
-- [Introduction](#introduction)
-- [Contexte du projet](#contexte-du-projet)
-- [Objectif de formation (Solicode)](#objectif-de-formation-solicode)
-- [Cahier des charges](#cahier-des-charges)
-- [Méthodologie de travail](#méthodologie-de-travail)
-  - [Méthodologie Scrum](#méthodologie-scrum)
-  - [Processus 2TUP](#processus-2tup)
-  - [Design Thinking](#design-thinking)
-- [Planification](#planification)
-- [Branche fonctionnelle](#branche-fonctionnelle)
-  - [Carte d'empathie](#carte-dempathie)
-  - [Définition du problème](#définition-du-problème)
-  - [Idéation](#idéation)
-  - [Diagramme de cas d'utilisation](#diagramme-de-cas-dutilisation)
-- [Branche technique](#branche-technique)
-  - [Stack technologique](#stack-technologique)
-  - [Architecture logicielle](#architecture-logicielle)
-  - [Prototype : fonctionnalités et classes](#prototype--fonctionnalités-et-classes)
-- [Conception](#conception)
-  - [Diagramme de classes](#diagramme-de-classes)
-  - [Maquettes](#maquettes)
-- [Réalisation](#réalisation)
-  - [Interfaces](#interfaces)
-- [Conclusion](#conclusion)
+- [Rapport du projet fil rouge](#rapport-du-projet-fil-rouge)
+  - [Table des matières](#table-des-matières)
+  - [Remerciements](#remerciements)
+  - [Introduction](#introduction)
+  - [Contexte du projet](#contexte-du-projet)
+  - [Objectif de formation (Solicode)](#objectif-de-formation-solicode)
+  - [Cahier des charges](#cahier-des-charges)
+  - [Méthodologie de travail](#méthodologie-de-travail)
+    - [Méthodologie Scrum](#méthodologie-scrum)
+      - [Sprint 1](#sprint-1)
+      - [Sprint 2](#sprint-2)
+    - [Processus 2TUP](#processus-2tup)
+    - [Design Thinking](#design-thinking)
+  - [Planification](#planification)
+  - [Branche fonctionnelle](#branche-fonctionnelle)
+    - [Carte d'empathie](#carte-dempathie)
+    - [Définition du problème](#définition-du-problème)
+    - [Idéation](#idéation)
+    - [Diagramme de cas d'utilisation](#diagramme-de-cas-dutilisation)
+  - [Branche technique](#branche-technique)
+    - [Stack technologique](#stack-technologique)
+    - [Architecture logicielle](#architecture-logicielle)
+    - [Prototype : fonctionnalités et classes](#prototype--fonctionnalités-et-classes)
+  - [Conception](#conception)
+    - [Diagramme de classes](#diagramme-de-classes)
+    - [Maquettes](#maquettes)
+  - [Réalisation](#réalisation)
+    - [Interfaces](#interfaces)
+  - [Conclusion](#conclusion)
 
 ## Remerciements
 
@@ -129,23 +133,6 @@ Le document d'architecture décrit un **exemple distinct de gestion de genres** 
 Cet exemple n'est pas cohérent avec la stack Laravel/MySQL décrite pour la plateforme de gestion de copropriété. En l'absence d'éléments permettant de relier les deux, cette architecture ne peut pas être présentée comme celle du projet principal.
 
 ### Prototype : fonctionnalités et classes
-
-Le projet technique préparatoire décrit un prototype CRUD de **livraison de repas**. Il permet à un propriétaire de gérer plusieurs restaurants, les plats de leurs menus et leurs catégories.
-
-Fonctionnalités décrites :
-
-- gérer plusieurs restaurants ;
-- ajouter, consulter, modifier et supprimer les plats d'un restaurant ;
-- gérer les catégories alimentaires ;
-- associer plusieurs catégories à un plat et organiser les plats par catégorie.
-
-Classes et relations documentées :
-
-- `RestaurantOwner` possède plusieurs `Restaurant` ;
-- `Restaurant` contient plusieurs `MenuItem` et plusieurs `FoodCategory` ;
-- `MenuItem` et `FoodCategory` sont en relation plusieurs-à-plusieurs.
-
-Ce prototype est présenté comme un travail réalisé avant le développement du projet principal ; son lien fonctionnel avec la plateforme de gestion de copropriété n'est pas précisé.
 
 ## Conception
 
