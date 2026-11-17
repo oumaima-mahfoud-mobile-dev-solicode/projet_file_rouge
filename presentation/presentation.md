@@ -5,24 +5,65 @@ size: 16:9
 paginate: true
 style: |
   section {
+    box-sizing: border-box;
     font-family: "Aptos", "Segoe UI", sans-serif;
     background: #f8fafc;
     color: #172033;
-    padding: 48px 64px;
+    padding: 40px 64px;
+    font-size: 23px;
+    line-height: 1.35;
   }
   h1, h2 {
     color: #243b6b;
+    line-height: 1.15;
   }
   h1 {
-    font-size: 2.4em;
+    font-size: 2.5em;
+    margin: 0 0 0.4em;
   }
   h2 {
-    font-size: 1.8em;
-    # margin-bottom: 0.7em;
+    font-size: 1.7em;
+    margin: 0 0 0.55em;
+  }
+  p {
+    margin: 0 0 0.65em;
   }
   ul {
-    font-size: 1.25em;
-    line-height: 1.65;
+    font-size: 1.05em;
+    line-height: 1.4;
+    margin: 0.2em 0 0.65em;
+  }
+  li {
+    margin: 0.12em 0;
+  }
+  img {
+    max-width: 100%;
+    max-height: 62vh;
+    object-fit: contain;
+  }
+  section.title-slide {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 40px 80px;
+  }
+  .institution-logos {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 64px;
+    margin-bottom: 20px;
+  }
+  .institution-logos img {
+    width: auto;
+    height: 82px;
+    max-width: 220px;
+  }
+  .institution-logos img:last-child {
+    height: auto;
+    max-height: 58px;
   }
   section.image-only {
     display: flex;
@@ -34,10 +75,17 @@ style: |
   }
   section.image-only img {
     max-width: 96%;
-    max-height: 78%;
+    max-height: 62vh;
     object-fit: contain;
   }
 ---
+
+<!-- _class: title-slide -->
+
+<div class="institution-logos">
+  <img src="images/logo-ofppt.png" alt="Logo OFPPT">
+  <img src="images/logo-solicode.png" alt="Logo SoliCode">
+</div>
 
 # ARTFIT
 
@@ -207,6 +255,8 @@ Les idées proposées pour répondre au problème :
 
 ---
 
+<!-- _class: image-only -->
+
 ## Diagramme de cas d'utilisation
 
 ![Diagramme de cas d'utilisation](images/mermaid-diagram-cas.png)
@@ -230,20 +280,12 @@ Les idées proposées pour répondre au problème :
 
 ---
 
-## Structure technique
 
-- **Frontend**  · Tailwind CSS · Alpine.js.
-- **Backend** · Laravel · PHP 8.2.
-- **Architecture** · Controllers · Services · Repositories / DAO.
-- **API** · REST.
-- **Base de données** · MySQL.
-- **3D** · Three.js.
-- **Mobile** · NativePHP.
-- **Versioning** · Git · GitHub.
 
----
+<!-- _class: image-only -->
 
 ## Diagramme de classes
+
 ![Diagramme de classes](<images/Diagramme de classes.png>)
 
 
@@ -257,10 +299,9 @@ Les idées proposées pour répondre au problème :
 - Une architecture organisée en trois couches.
 - Une expérience de shopping moderne et interactive.
 
-**ARTFIT — Your Style, Your World.**
+
 
 ---
 
 # Merci pour votre attention !
 
-**Présenté par : Oumaima Mahfoud**
