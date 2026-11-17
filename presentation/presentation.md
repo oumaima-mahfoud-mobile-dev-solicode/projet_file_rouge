@@ -18,7 +18,7 @@ style: |
   }
   h2 {
     font-size: 1.8em;
-    margin-bottom: 0.7em;
+    # margin-bottom: 0.7em;
   }
   ul {
     font-size: 1.25em;
@@ -53,6 +53,18 @@ Année : 2026–2027
 
 ---
 
+## Plan de la présentation
+
+1. Introduction et contexte du projet
+2. Méthodologies et planification
+3. Branche fonctionnelle
+4. Compréhension du besoin : empathie, problématique et idéation
+5. Conception : diagrammes de cas d'utilisation et de classes
+6. Stack technologique et structure technique
+7. Conclusion
+
+---
+
 ## Introduction
 
 Le commerce électronique évolue rapidement.
@@ -76,39 +88,7 @@ Le shopping en ligne présente plusieurs difficultés :
 
 ---
 
-## Objectif de formation (Solicode)
-
-Ce projet permet de mettre en pratique les compétences acquises pendant la formation Full Stack.
-
-- Analyser et comprendre un besoin.
-- Concevoir une application web.
-- Modéliser une base de données.
-- Développer un backend avec Laravel.
-- Créer des interfaces modernes et responsives.
-- Appliquer une architecture en trois couches.
-- Tester et documenter une application.
-
----
-
-## Cahier des charges
-
-**Objectif principal :**
-
-Développer une plateforme e-commerce de mode avec une expérience interactive en 3D.
-
-**Fonctionnalités principales :**
-
-- Inscription et authentification.
-- Gestion des utilisateurs et des rôles.
-- Gestion des produits et des catégories.
-- Gestion des variantes : tailles et couleurs.
-- Gestion des prix, images et stocks.
-- Consultation du catalogue.
-- Personnalisation des tenues.
-- Visualisation des vêtements en 3D.
-- Gestion du panier et des commandes.
-- Gestion des réductions.
-- Administration de la plateforme.
+# les methodologies 
 
 ---
 
@@ -138,21 +118,34 @@ Développer une plateforme e-commerce de mode avec une expérience interactive e
 
 ## Planification
 
-Le projet est organisé en plusieurs étapes :
+Le projet est organisé en plusieurs sprints:
 
-1. Analyse du besoin et définition du projet.
-2. Analyse des données et des règles métier.
-3. Conception de la base de données.
-4. Création des maquettes UI/UX.
-5. Développement du backend.
-6. Développement du frontend.
-7. Intégration de la visualisation 3D.
-8. Tests et validation.
-9. Documentation et présentation.
+
+**Sprint 01 — Gestion des produits**
+- CRUD Product.
+- Affichage des produits dans la plateforme.
+- Diagramme de cas d'utilisation.
 
 ---
 
+**Sprint 02 — Gestion des catégories**
+- CRUD Category.
+- Organisation des fichiers.
+- Séparation des responsabilités.
+
+---
+
+**Sprint 03 — Architecture**
+- Utilisation du pattern DAO.
+- Architecture en 3 couches.
+- Séparation de la logique métier et des données.
+  
+---
+
 ## Branche fonctionnelle
+
+---
+
 
 **Acteurs principaux :**
 
@@ -160,6 +153,7 @@ Le projet est organisé en plusieurs étapes :
 - **Client** : gérer son compte, personnaliser ses tenues et commander.
 - **Administrateur** : gérer les produits, les catégories, les stocks, les utilisateurs et les commandes.
 - **Service de paiement** : traiter les paiements.
+---
 
 **Principaux modules :**
 
@@ -215,6 +209,8 @@ Les idées proposées pour répondre au problème :
 
 ## Diagramme de cas d'utilisation
 
+![Diagramme de cas d'utilisation](images/mermaid-diagram-cas.png)
+
 
 
 ---
@@ -231,49 +227,12 @@ Les idées proposées pour répondre au problème :
 - **Versioning** · Git · GitHub
 
 
----
-
-## Prototype ARTFIT
-
-**Gestion des produits :**
-
-- Produits · Catégories · Variantes.
-- Création · Consultation · Modification · Suppression.
-- Images et médias.
-- Prix et promotions.
-- Tailles et couleurs.
-- SKU et gestion du stock.
-- Statut : brouillon ou publié.
-
-**Expérience client :**
-
-- Consultation du catalogue.
-- Personnalisation des tenues.
-- Visualisation 3D.
-- Panier et commandes.
-
----
-
-## Relations des données
-
-- **User** → plusieurs rôles.
-- **Role** → plusieurs permissions.
-- **Category** → plusieurs sous-catégories.
-- **Category** → plusieurs produits.
-- **Product** → plusieurs variantes.
-- **Product** → plusieurs médias.
-- **ProductVariant** → plusieurs articles de panier.
-- **User** → plusieurs commandes.
-- **Order** → plusieurs lignes de commande.
-- **Order** → plusieurs paiements.
-- **Product** → plusieurs réductions.
-- **User** → plusieurs tenues personnalisées.
 
 ---
 
 ## Structure technique
 
-- **Frontend** · Blade · Tailwind CSS · Alpine.js.
+- **Frontend**  · Tailwind CSS · Alpine.js.
 - **Backend** · Laravel · PHP 8.2.
 - **Architecture** · Controllers · Services · Repositories / DAO.
 - **API** · REST.
@@ -285,15 +244,7 @@ Les idées proposées pour répondre au problème :
 ---
 
 ## Diagramme de classes
-
-
----
-
-## Maquettes
-
-**Conception UI/UX de la plateforme ARTFIT.**
-
-
+![Diagramme de classes](<images/Diagramme de classes.png>)
 
 
 ---
